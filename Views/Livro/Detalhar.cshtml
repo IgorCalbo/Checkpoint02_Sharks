@@ -1,0 +1,44 @@
+﻿@model LivroViewModel
+
+@{ 
+    ViewData["Title"] = "Detalhar";
+}
+
+<h1>@Model.Livro.Nome</h1>
+
+<div class="card" style="width: 18rem;">
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Editora: @Model.Livro.Editora?.Nome</li>
+        <li class="list-group-item">Páginas: @Model.Livro.Paginas</li>
+        <li class="list-group-item">Gênero: @Model.Livro.Genero</li>
+        <li class="list-group-item">Data Lançamento: @Model.Livro.DataLancamento.ToShortDateString()</li>
+    </ul>
+</div>
+
+<br />
+<h2>Escritores</h2>
+
+<mensagem texto="@TempData["msg"]"></mensagem>
+
+<form asp-action="adicionar" class="form-inline mb-3">
+    <input type="hidden" name="LivroId" value="@Model.Livro.LivroId" />
+    <select class="form-control mr-2" name="EscritorId" asp-items="Model.OpcoesEscritores">
+        <option>Selecione</option>
+    </select>
+    <input type="submit" value="Adicionar" class="btn btn-success" />
+</form>
+
+<table class="table">
+    <tr>
+        <th>Nome</th>
+    </tr>
+    @foreach (var item in Model.Escritores)
+     {
+        <tr>
+            <td>
+                @item.Nome
+            </td>
+        </tr>
+     }
+</table>
+

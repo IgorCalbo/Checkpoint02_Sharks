@@ -1,0 +1,74 @@
+﻿@model List<Livro>
+
+@{ 
+    ViewData["Title"] = "Livros";
+}
+
+<h1>Livros</h1>
+
+<a asp-action="cadastrar">Cadastrar</a>
+
+<mensagem texto="@TempData["msg"]"></mensagem>
+
+<form class="form-inline mb-3">
+    <input type="text" name="nomeBusca" placeholder="Digite o nome" class="form-control mr-1" />
+    <select class="form-control mr-1" asp-items="@Html.GetEnumSelectList<Genero>()" name="generoBusca">
+        <option>Gênero</option>
+    </select>
+    <input type="submit" value="Pesquisar" class="btn btn-warning" />
+</form>
+
+<table class="table">
+    <tr>
+        <td>Id</td>
+        <th>Nome</th>
+        <th>Páginas</th>
+        <th>Gênero</th>
+        <th>Infantil</th>
+        <th>Data Lançamento</th>
+        <th>Editora</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+     {
+        <tr>
+            <td>@item.LivroId</td>
+            <td>@item.Nome</td>
+            <td>@item.Paginas</td>
+            <td>@item.Genero</td>
+            <td>@(item.Infantil?"Sim":"Não")</td>
+            <td>@item.DataLancamento.ToShortDateString()</td>
+            <td>@item.Editora?.Nome</td>
+            <td>
+                <a asp-action="editar" asp-route-id="@item.LivroId" class="btn btn-sm btn-primary">Editar</a>
+                <button onclick="idLivro.value = @item.LivroId" type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal">
+                    Excluir
+                </button>
+                <a asp-action="detalhar" asp-route-id="@item.LivroId" class="btn btn-secondary btn-sm">Detalhes</a>
+            </td>
+        </tr>
+     }
+</table>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Deseja realmente excluir o livro?
+            </div>
+            <div class="modal-footer">
+                <form asp-action="remover">
+                    <input type="hidden" name="id" id="idLivro" />
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                    <button type="submit" class="btn btn-danger">Sim</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

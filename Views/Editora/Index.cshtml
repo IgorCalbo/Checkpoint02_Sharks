@@ -1,0 +1,40 @@
+﻿@model EditoraViewModel
+
+@{ 
+    ViewData["Title"] = "Index";
+}
+
+<h1>Editoras</h1>
+
+<mensagem texto="@TempData["msg"]"></mensagem>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="cadastrar">
+            <div class="form-group">
+                <label asp-for="Editora.Nome"></label>
+                <input asp-for="Editora.Nome" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Editora.DataInicio"></label>
+                <input asp-for="Editora.DataInicio" class="form-control" />
+            </div>
+            <input type="submit" value="Cadastrar" class="btn btn-info" />
+        </form>
+    </div>
+<div class="col-md-6">
+        <table class="table">
+            <tr>
+                <th>Nome</th>
+                <th>Data Início</th>
+            </tr>
+            @foreach (var item in Model.Lista)
+            {
+                <tr>
+                    <td>@item.Nome</td>
+                    <td>@item.DataInicio.ToShortDateString()</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

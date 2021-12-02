@@ -1,0 +1,30 @@
+﻿@model IList<Escritor>
+
+@{ ViewData["Title"] = "Index"; }
+
+<h1>Escritores</h1>
+
+<mensagem texto="@TempData["msg"]"></mensagem>
+
+<table class="table">
+    <tr>
+        <th>Nome</th>
+        <th>Gênero</th>
+        <th>Data de Nascimento</th>
+        <th>Logradouro</th>
+        <th>CEP</th>
+        <th>Cidade</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>@item.Nome</td>
+    <td>@item.Genero</td>
+    <td>@item.DataNascimento.ToShortDateString()</td>
+    <td>@item.Endereco.Logradouro</td>
+    <td>@item.Endereco.Cep</td>
+    <td>@item.Endereco.Cidade</td>
+</tr>}
+</table>
+
+
